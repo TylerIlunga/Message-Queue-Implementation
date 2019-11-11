@@ -5,7 +5,7 @@
 #define INITIAL_MESSAGE "What operation would you like to execute:\n[1] Create Message Queue\n[2] Delete Message Queue\n"
 #define INVALID_OP_ARGUMENT "Invalid operation argument entered by user."
 #define PATH_REQUEST_MESSAGE "Please enter the path for the Message Queue below[without extension]:\n"
-#define ID_REQUEST_MESSAGE "Please enter the ID for the Message Queue below[without extension]:\n"
+#define ID_REQUEST_MESSAGE "Please enter the ID for the Message Queue below:\n"
 #define KEY_CREATED_MESSAGE "Key for Message Queue has been created!\n"
 #define CREATE_QUEUE_ERROR "Could not create Message Queue with path: "
 #define DELETE_QUEUE_ERROR "Could not delete Message Queue with path: "
@@ -42,7 +42,8 @@ void create_message_queue(key_t &msgq_key, int &msgq_id)
     std::cout
         << std::string("Message Queue with path " + path_w_ext + " has been created!\n")
         << "KEY: "
-        << msgq_key << "\nID: "
+        << msgq_key 
+        << "\nMESSAGE QUEUE ID: "
         << msgq_id << "\n";
 }
 

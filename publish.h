@@ -8,3 +8,9 @@
 #include <iostream>
 
 void publish_messages();
+
+struct msg_buffer {
+    long msg_type;
+    std::string msg_content;
+    int msg_content_len;
+};
