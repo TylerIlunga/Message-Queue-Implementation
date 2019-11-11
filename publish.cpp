@@ -1,15 +1,14 @@
 /* Program allows user to publish messages to a Message Queue */
-#include "publish.h"
+#include "queue.h"
 
 #define PERMISSIONS 0644
 #define INITIAL_MESSAGE "Please enter the path for the Message Queue below[without extension]:\n"
 #define ID_REQUEST_MESSAGE "Please enter the ID for the Message Queue below:\n"
 #define KEY_CREATED_MESSAGE "Key for Message Queue has been created!\n"
 #define CONNECTION_ERROR "Could not connect to Message Queue: "
-#define CONNECTION_SUCCESS "Connected!\nTo Exit: ['Exit'||'exit'||^C||^D]\nEnter your messages below:\n"
+#define CONNECTION_SUCCESS "Connected!\nTo Exit: [^C||^D]\nEnter your messages below:\n"
 #define PUBLISH_ERROR "Error while attempting to publish message"
 #define CLOSING_CONNECTION "Closing Connection...\n"
-
 
 void publish_messages()
 {
@@ -37,35 +36,31 @@ void publish_messages()
 
     std::cout << "MESSAGE QUEUE ID: " << msgq_id << std::endl;
     std::cout << CONNECTION_SUCCESS;
-     
-    buffer.msg_type = 1;
 
-    while(std::getline(std::cin, buffer.msg_content)) {
-        if (buffer.msg_content == "Exit" || buffer.msg_content == "exit") {
-            break;
-        }
-        if (buffer.msg_content.length() > 0) {
-            std::cout << "[SENT]: " << buffer.msg_content << std::endl;
-            buffer.msg_content_len = buffer.msg_content.length();
-            if (buffer.msg_content[buffer.msg_content_len - 1] == '\n') {
-                buffer.msg_content[buffer.msg_content_len - 1] = '\0';
+    buffer.mtype = 1;
+
+    while (fgets(buffer.mtext, sizeof buffer.mtext, stdin) != NULL)
+    {
+        buffer.msg_content_len = strlen(buffer.mtext);
+        if ((int)buffer.msg_content_len > 1)
+        {
+            if (buffer.mtext[buffer.msg_content_len - 1] == '\n')
+            {
+                buffer.mtext[buffer.msg_content_len - 1] = '\0';
             }
-            if (msgsnd(msgq_id, &buffer, buffer.msg_content_len + 1, 0) == -1) {
+            if (msgsnd(msgq_id, &buffer, buffer.msg_content_len + 1, 0) == -1)
+            {
                 throw std::runtime_error(PUBLISH_ERROR);
             }
+            std::cout << "[SENT]: " << buffer.mtext << std::endl;
         }
     }
 
-    buffer.msg_content = "[END]";
-    buffer.msg_content_len = buffer.msg_content.length();
-     if (msgsnd(msgq_id, &buffer, buffer.msg_content_len + 1, 0) == -1) {
-            throw std::runtime_error(PUBLISH_ERROR);
-    }
     std::cout << CLOSING_CONNECTION;
 }
 
 int main(int argc, char **argv)
 {
-     publish_messages();
-     return 0;
+    publish_messages();
+    return 0;
 }

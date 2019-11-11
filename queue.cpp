@@ -38,11 +38,11 @@ void create_message_queue(key_t &msgq_key, int &msgq_id)
         int r = remove(path_w_ext.c_str());
         throw std::runtime_error(std::string(CREATE_QUEUE_ERROR + path));
     }
-    // NOTE:: MAYBE STORE KEY AND ID ADDRESSES IN SHARED MEMORY FOR PUBLISH AND SUBSCRIBE PROCESS TO FETCH FROM.
+    // NOTE:: MAYBE STORE KEY AND ID ADDRESSES IN SHARED MEMORY FOR PUBLISH AND SUBSCRIBE PROCESSES TO FETCH FROM.
     std::cout
         << std::string("Message Queue with path " + path_w_ext + " has been created!\n")
         << "KEY: "
-        << msgq_key 
+        << msgq_key
         << "\nMESSAGE QUEUE ID: "
         << msgq_id << "\n";
 }
@@ -51,11 +51,12 @@ void delete_message_queue()
 {
     std::string msgq_id;
     std::string path;
-    
+
     std::cout << ID_REQUEST_MESSAGE;
     std::cin >> msgq_id;
 
-    if (msgctl(std::stoi(msgq_id), IPC_RMID, NULL) == -1) {
+    if (msgctl(std::stoi(msgq_id), IPC_RMID, NULL) == -1)
+    {
         throw std::runtime_error(std::string(DELETE_QUEUE_ERROR + path));
     }
     std::cout << PATH_REQUEST_MESSAGE;
