@@ -1,4 +1,4 @@
-/* Program execute operations for a Message Queue  */
+/* Program executes operations for creating or deleting a Message Queue  */
 #include "queue.h"
 
 #define PERMISSIONS 0644
