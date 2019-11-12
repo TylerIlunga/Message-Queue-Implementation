@@ -1,4 +1,4 @@
-/* Program allows user to publish messages to a Message Queue */
+/* Program allows users to publish messages to a Message Queue */
 #include "queue.h"
 
 #define PERMISSIONS 0644
