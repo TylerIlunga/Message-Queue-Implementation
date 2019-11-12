@@ -1,4 +1,4 @@
-/* Program allows users to subscribe messages published to a Message Queue */
+/* Program allows users to subscribe to messages published on the Message Queue */
 #include "queue.h"
 
 #define PERMISSIONS 0644
